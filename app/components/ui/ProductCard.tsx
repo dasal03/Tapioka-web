@@ -11,7 +11,7 @@ interface Product {
   desc: string;
 }
 
-function ProductCard({
+export default function ProductCard({
   product: p,
   index = 0,
   visible = true,
@@ -29,35 +29,34 @@ function ProductCard({
       onMouseLeave={() => setHovered(false)}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      {/* ── IMAGE ZONE ── */}
+      {/* IMAGE */}
       <div className="image-wrap">
         <Image
           src={p.image}
           alt={p.name}
-          className="photo"
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
+          className="photo"
+          sizes="(max-width: 768px) 100vw, 40vw"
         />
 
         <div className="cover" />
 
-        {/* Tag badge */}
         <span className="badge">{p.tag}</span>
 
-        {/* Hover description overlay */}
         <div className="desc-overlay">
           <p>{p.desc}</p>
         </div>
       </div>
 
-      {/* ── BODY ── */}
+      {/* BODY */}
       <div className="body">
-        <div className="body-left">
+        <div>
           <h3 className="name">{p.name}</h3>
           <div className="underline" />
         </div>
+
         <div className="arrow">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <svg width="18" height="18" viewBox="0 0 18 18">
             <path
               d="M3.5 9H14.5M14.5 9L10 4.5M14.5 9L10 13.5"
               stroke="currentColor"
@@ -71,19 +70,15 @@ function ProductCard({
 
       <style jsx>{`
         .card {
-          border-radius: 20px;
+          border-radius: 22px;
           overflow: hidden;
           background: #fff;
-          border: 1px solid rgba(26, 61, 43, 0.07);
+          border: 1px solid rgba(26, 61, 43, 0.06);
           cursor: pointer;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-          transition:
-            box-shadow 0.4s ease,
-            transform 0.4s ease,
-            opacity 0.55s ease;
-          /* entrance */
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+          transition: all 0.4s ease;
           opacity: 0;
-          transform: translateY(28px);
+          transform: translateY(30px);
         }
 
         .card.in {
@@ -92,93 +87,52 @@ function ProductCard({
         }
 
         .card.hovered {
-          box-shadow: 0 20px 48px rgba(26, 61, 43, 0.14);
-          transform: translateY(-4px);
+          transform: translateY(-6px);
+          box-shadow: 0 22px 50px rgba(0, 0, 0, 0.12);
         }
 
-        /* ── IMAGE ── */
+        /* IMAGE */
         .image-wrap {
           position: relative;
           width: 100%;
           aspect-ratio: 4 / 3;
+          min-height: 260px;
           overflow: hidden;
           background: #e8e0d6;
         }
 
         .photo {
-          width: 100%;
-          height: 100%;
           object-fit: cover;
-          object-position: center;
-          display: block;
           transition:
-            transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            transform 0.7s ease,
             filter 0.4s ease;
-          filter: brightness(0.98) saturate(1.05);
         }
 
         .card.hovered .photo {
-          transform: scale(1.07);
-          filter: brightness(0.7) saturate(1.08);
+          transform: scale(1.08);
+          filter: brightness(0.7);
         }
 
         .cover {
           position: absolute;
           inset: 0;
-          z-index: 1;
-          background:
-            linear-gradient(
-              to top,
-              rgba(8, 18, 12, 0.72) 0%,
-              rgba(8, 18, 12, 0.28) 42%,
-              rgba(8, 18, 12, 0.08) 68%,
-              rgba(8, 18, 12, 0) 100%
-            ),
-            linear-gradient(
-              180deg,
-              rgba(10, 10, 10, 0.14) 0%,
-              rgba(10, 10, 10, 0) 34%
-            );
-          transition:
-            opacity 0.35s ease,
-            background 0.35s ease;
-          pointer-events: none;
+          background: linear-gradient(
+            to top,
+            rgba(8, 18, 12, 0.75),
+            rgba(8, 18, 12, 0.1)
+          );
         }
 
-        .card.hovered .cover {
-          background:
-            linear-gradient(
-              to top,
-              rgba(8, 18, 12, 0.84) 0%,
-              rgba(8, 18, 12, 0.48) 48%,
-              rgba(8, 18, 12, 0.14) 76%,
-              rgba(8, 18, 12, 0.02) 100%
-            ),
-            linear-gradient(
-              180deg,
-              rgba(184, 147, 63, 0.08) 0%,
-              rgba(10, 10, 10, 0) 38%
-            );
-        }
-
-        /* Badge */
         .badge {
           position: absolute;
-          top: 14px;
-          left: 14px;
-          background: rgba(245, 240, 232, 0.92);
+          top: 16px;
+          left: 16px;
+          background: rgba(255, 255, 255, 0.92);
           color: ${COLORS.green};
-          font-size: 9px;
+          font-size: 10px;
           letter-spacing: 2px;
-          text-transform: uppercase;
-          font-weight: 600;
-          padding: 5px 12px;
+          padding: 6px 14px;
           border-radius: 50px;
-          backdrop-filter: blur(6px);
-          z-index: 3;
-          transition:
-            background 0.3s,
-            color 0.3s;
         }
 
         .card.hovered .badge {
@@ -186,26 +140,20 @@ function ProductCard({
           color: #fff;
         }
 
-        /* Description overlay */
         .desc-overlay {
           position: absolute;
           inset: 0;
           display: flex;
           align-items: flex-end;
-          padding: 1.4rem 1.4rem 1.6rem;
-          z-index: 2;
+          padding: 1.6rem;
         }
 
         .desc-overlay p {
-          color: rgba(245, 240, 232, 0.95);
+          color: #fff;
           font-size: 13px;
-          line-height: 1.7;
-          margin: 0;
           opacity: 0;
           transform: translateY(10px);
-          transition:
-            opacity 0.35s ease,
-            transform 0.35s ease;
+          transition: 0.3s ease;
         }
 
         .card.hovered .desc-overlay p {
@@ -213,58 +161,42 @@ function ProductCard({
           transform: translateY(0);
         }
 
-        /* ── BODY ── */
+        /* BODY */
         .body {
-          padding: 1.1rem 1.3rem 1.2rem;
+          padding: 1.5rem;
           display: flex;
-          align-items: center;
           justify-content: space-between;
-          gap: 1rem;
-        }
-
-        .body-left {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
+          align-items: center;
         }
 
         .name {
           font-family: Georgia, serif;
-          font-size: 1.2rem;
-          font-weight: 600;
+          font-size: 1.35rem;
           color: ${COLORS.green};
-          margin: 0;
-          line-height: 1.1;
         }
 
         .underline {
-          width: 20px;
-          height: 1.5px;
+          width: 22px;
+          height: 2px;
           background: ${COLORS.gold};
-          border-radius: 2px;
-          transition: width 0.35s ease;
+          transition: 0.3s;
         }
 
         .card.hovered .underline {
-          width: 40px;
+          width: 42px;
         }
 
         .arrow {
           color: ${COLORS.gold};
-          opacity: 0.4;
-          transition:
-            opacity 0.3s,
-            transform 0.3s;
-          flex-shrink: 0;
+          opacity: 0.5;
+          transition: 0.3s;
         }
 
         .card.hovered .arrow {
           opacity: 1;
-          transform: translateX(3px);
+          transform: translateX(4px);
         }
       `}</style>
     </article>
   );
 }
-
-export default ProductCard;

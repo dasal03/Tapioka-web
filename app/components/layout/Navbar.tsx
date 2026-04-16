@@ -41,12 +41,13 @@ function Navbar() {
         transition: "all 0.35s ease",
         background: scrolled
           ? "rgba(26,61,43,0.92)"
-          : "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
+          : "rgba(255,255,255,0.96)",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(184,147,63,0.2)"
-          : "1px solid transparent",
+          : "1px solid rgba(184,147,63,0.12)",
+        boxShadow: scrolled ? "none" : "0 6px 24px rgba(17,17,17,0.04)",
       }}
     >
       <nav
@@ -66,7 +67,7 @@ function Navbar() {
             fontFamily: "Georgia, serif",
             fontSize: "1.4rem",
             fontWeight: 600,
-            color: COLORS.cream,
+            color: scrolled ? COLORS.cream : COLORS.goldDark,
             textDecoration: "none",
             letterSpacing: "0.05em",
           }}
@@ -89,17 +90,26 @@ function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
+                className="nav-link"
                 style={{
                   fontSize: 11,
                   letterSpacing: "2.5px",
                   textTransform: "uppercase",
-                  color: "rgba(245,240,232,0.75)",
+                  color: scrolled
+                    ? "rgba(245,240,232,0.75)"
+                    : "rgba(154,120,48,0.82)",
                   textDecoration: "none",
-                  transition: "0.2s",
+                  transition: "color 0.2s ease, transform 0.2s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = scrolled
+                    ? "#fff"
+                    : COLORS.gold)
+                }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "rgba(245,240,232,0.75)")
+                  (e.currentTarget.style.color = scrolled
+                    ? "rgba(245,240,232,0.75)"
+                    : "rgba(154,120,48,0.82)")
                 }
               >
                 {l.label}
@@ -140,7 +150,7 @@ function Navbar() {
           style={{
             background: "transparent",
             border: "none",
-            color: COLORS.cream,
+            color: scrolled ? COLORS.cream : COLORS.goldDark,
             fontSize: 20,
             cursor: "pointer",
           }}
@@ -154,8 +164,8 @@ function Navbar() {
         <div
           style={{
             padding: "1rem 1.5rem",
-            background: "rgba(26,61,43,0.98)",
-            backdropFilter: "blur(12px)",
+            background: scrolled ? "rgba(26,61,43,0.98)" : "rgba(255,255,255,0.98)",
+            backdropFilter: scrolled ? "blur(12px)" : "none",
           }}
         >
           {links.map((l) => (
@@ -165,9 +175,11 @@ function Navbar() {
               style={{
                 display: "block",
                 padding: "12px 0",
-                color: "#fff",
+                color: scrolled ? "#fff" : COLORS.green,
                 textDecoration: "none",
-                borderBottom: "1px solid rgba(255,255,255,0.08)",
+                borderBottom: scrolled
+                  ? "1px solid rgba(255,255,255,0.08)"
+                  : "1px solid rgba(26,61,43,0.08)",
               }}
               onClick={() => setMenuOpen(false)}
             >
@@ -196,6 +208,38 @@ function Navbar() {
 
       {/* Responsive styles */}
       <style jsx>{`
+        .nav-link {
+          position: relative;
+          display: inline-flex;
+          padding-bottom: 6px;
+        }
+
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 1.5px;
+          border-radius: 999px;
+          background: ${COLORS.gold};
+          transform: scaleX(0.35);
+          transform-origin: center;
+          opacity: 0;
+          transition:
+            transform 0.22s ease,
+            opacity 0.22s ease;
+        }
+
+        .nav-link:hover {
+          transform: translateY(-1px);
+        }
+
+        .nav-link:hover::after {
+          transform: scaleX(1);
+          opacity: 1;
+        }
+
         .mobile-menu-btn {
           display: none;
         }

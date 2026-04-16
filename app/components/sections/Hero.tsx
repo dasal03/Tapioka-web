@@ -30,7 +30,10 @@ function Hero() {
   return (
     <section
       style={{
-        background: `radial-gradient(circle at 50% 44%, rgba(184,147,63,0.08), transparent 28%), ${COLORS.green}`,
+        background: `
+          radial-gradient(circle at top, rgba(212,170,88,0.14), transparent 26%),
+          linear-gradient(180deg, #254f3a 0%, ${COLORS.green} 45%, #132b1f 100%)
+        `,
         minHeight: "92vh",
         display: "flex",
         alignItems: "center",
@@ -51,14 +54,117 @@ function Hero() {
           pointerEvents: "none",
         }}
       >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            x: [0, 30, 0],
+            y: [0, -18, 0],
+          }}
+          transition={{
+            opacity: { duration: 1.1, delay: 0.15 },
+            scale: { duration: 1.1, delay: 0.15 },
+            x: {
+              duration: 12,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            },
+            y: {
+              duration: 10,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            },
+          }}
+          style={{
+            position: "absolute",
+            top: "12%",
+            left: "-2%",
+            width: "34vw",
+            minWidth: 240,
+            maxWidth: 520,
+            aspectRatio: "1 / 1",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(212,170,88,0.24) 0%, rgba(212,170,88,0.06) 48%, transparent 72%)",
+            filter: "blur(26px)",
+          }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            x: [0, -34, 0],
+            y: [0, 22, 0],
+          }}
+          transition={{
+            opacity: { duration: 1.1, delay: 0.25 },
+            scale: { duration: 1.1, delay: 0.25 },
+            x: {
+              duration: 14,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            },
+            y: {
+              duration: 11,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            },
+          }}
+          style={{
+            position: "absolute",
+            right: "-4%",
+            top: "18%",
+            width: "28vw",
+            minWidth: 220,
+            maxWidth: 420,
+            aspectRatio: "1 / 1",
+            borderRadius: "42%",
+            background:
+              "radial-gradient(circle, rgba(45,97,71,0.34) 0%, rgba(45,97,71,0.1) 46%, transparent 72%)",
+            filter: "blur(30px)",
+          }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 0.34,
+            backgroundPosition: ["0% 0%", "100% 100%"],
+          }}
+          transition={{
+            opacity: { duration: 1, delay: 0.4 },
+            backgroundPosition: {
+              duration: 18,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "reverse",
+              ease: "linear",
+            },
+          }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(115deg, rgba(255,255,255,0.06) 0%, transparent 22%, transparent 78%, rgba(255,255,255,0.04) 100%)",
+            backgroundSize: "140% 140%",
+            maskImage:
+              "linear-gradient(to bottom, transparent, rgba(0,0,0,0.85) 22%, rgba(0,0,0,0.85) 80%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent, rgba(0,0,0,0.85) 22%, rgba(0,0,0,0.85) 80%, transparent)",
+          }}
+        />
+
         {[520, 360, 220].map((size, index) => (
           <motion.div
             key={size}
             initial={{ opacity: 0, scale: 0.84 }}
             animate={{
-              opacity: 1,
+              opacity: 0.65,
               scale: 1,
               y: [0, index % 2 === 0 ? -8 : 8, 0],
+              rotate: [0, index % 2 === 0 ? 6 : -6, 0],
             }}
             transition={{
               opacity: {
@@ -77,6 +183,12 @@ function Hero() {
                 repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               },
+              rotate: {
+                duration: 11 + index,
+                delay: 1,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              },
             }}
             style={{
               position: "absolute",
@@ -85,7 +197,7 @@ function Hero() {
               top: "50%",
               left: "50%",
               borderRadius: "50%",
-              border: `1px solid rgba(184,147,63,${0.09 - index * 0.02})`,
+              border: `1px solid rgba(184,147,63,${0.1 - index * 0.022})`,
               transform: "translate(-50%, -50%)",
             }}
           />
@@ -111,9 +223,10 @@ function Hero() {
             transform: "translateX(-50%)",
             width: 640,
             height: 260,
-            background: "rgba(184,147,63,0.1)",
+            background:
+              "radial-gradient(circle, rgba(184,147,63,0.22) 0%, rgba(184,147,63,0.08) 42%, transparent 72%)",
             borderRadius: "50%",
-            filter: "blur(60px)",
+            filter: "blur(72px)",
           }}
         />
 
@@ -252,38 +365,83 @@ function Hero() {
         </motion.div>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, scaleY: 0 }}
-        animate={{
-          opacity: 1,
-          scaleY: 1,
-          y: [0, 8, 0],
-        }}
-        transition={{
-          opacity: { duration: 0.8, delay: 0.95 },
-          scaleY: {
-            duration: 0.9,
-            delay: 0.95,
-            ease: [0.22, 1, 0.36, 1],
-          },
-          y: {
-            duration: 2.6,
-            delay: 1.8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          },
-        }}
+      <div
         style={{
           position: "absolute",
-          bottom: 32,
+          bottom: 28,
           left: "50%",
           transform: "translateX(-50%)",
-          transformOrigin: "top center",
-          width: 1,
-          height: 48,
-          background: `linear-gradient(to bottom, ${COLORS.gold}80, transparent)`,
+          zIndex: 2,
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          pointerEvents: "none",
         }}
-      />
+      >
+        <motion.a
+          href="#productos"
+          initial={{ opacity: 0, y: 22 }}
+          animate={{
+            opacity: 1,
+            y: [0, 8, 0],
+          }}
+          transition={{
+            opacity: { duration: 0.8, delay: 1 },
+            y: {
+              duration: 2.4,
+              delay: 1.35,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            },
+          }}
+          whileHover={{ scale: 1.03, y: -2 }}
+          style={{
+            pointerEvents: "auto",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "0.85rem 1rem 0.85rem 1.1rem",
+            borderRadius: 999,
+            background: "rgba(245,240,232,0.09)",
+            border: "1px solid rgba(245,240,232,0.14)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            color: COLORS.cream,
+            textDecoration: "none",
+            boxShadow: "0 16px 34px rgba(0,0,0,0.14)",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 11,
+              letterSpacing: "2.8px",
+              textTransform: "uppercase",
+              color: "rgba(245,240,232,0.82)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Desliza y descubre
+          </span>
+
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 30,
+              height: 30,
+              borderRadius: "50%",
+              background: COLORS.gold,
+              color: "#fff",
+              fontSize: 16,
+              lineHeight: 1,
+              boxShadow: "0 8px 18px rgba(184,147,63,0.28)",
+            }}
+          >
+            ↓
+          </span>
+        </motion.a>
+      </div>
     </section>
   );
 }
