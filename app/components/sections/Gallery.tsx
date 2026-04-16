@@ -4,7 +4,13 @@ import GalleryCell from "@/components/ui/GalleryCell";
 import { COLORS, IG_URL } from "@/lib/site/constants";
 import { InstagramIcon } from "@/lib/site/icons";
 
-const galleryItems = [
+type GalleryItemType = {
+  image: string;
+  label: string;
+  layout: "feature" | "wide" | "small" | "portrait";
+};
+
+const galleryItems: GalleryItemType[] = [
   {
     image:
       "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=85&fit=crop",
